@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>###viewName###</title>
+<link rel="stylesheet" href="../css/main.css" type="text/css">
+<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="../js/commonfun.js"></script>
+<script type="text/javascript" src="../js/list.js"></script>
+<script type="text/javascript">
+
+	/******!!!以下的servletName、viewFields不得改为其他名称!!!******/
+	//servlet名称
+	var servletName="###servletName###";
+	//页面显示字段，此处的位置关系到页面上显示的位置，viewFields中每一行则表示table中的一行
+	//每个字段中各属性含义：属性对应的字段，显示名称，名称列宽度，值所在列宽度，值所在列合并列数
+	var viewFields = ###viewFields###;
+    
+    window.onload = function()
+    {
+    	//初始化页面，需放在window.onload或者$(document).ready中
+        initViewPage();
+    	var id = getArgsFromHref("id");
+        $.post(servletName, { action: "post", opt : "getInfo", id : id },
+    			function (data, textStatus){
+   					var info = data.info;
+   					for(var obj in info){ //每个obj即是info中的字段名，对应数据库表中字段名
+   						//填充数据，如果需要特殊处理请在此处过滤
+   						var value = info[obj].toString();
+   						eval('$("#'+obj+'")').html(value);
+   					}
+    			}, 
+    	"json");
+    };
+
+</script>
+</head>
+<body>
+	<div id="viewPageDiv">
+	     
+	</div>
+</body>
+</html>

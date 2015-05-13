@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>根据数据库表名生成list、edit、view页面以及后端逻辑代码</title>
+<link rel="stylesheet" href="css/list.css" type="text/css">
+<link rel="stylesheet" href="css/jquery-ui.min.css" /> 
+<link rel="stylesheet" href="ueditor-1.4.2/themes/default/css/ueditor.css" type="text/css">
+
+<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+<script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script> 
+<script type="text/javascript" src="js/Calendar3.js"></script>
+<script type="text/javascript" src="js/json2.js"></script>
+<script type="text/javascript" charset="utf-8" src="ueditor-1.4.2/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="ueditor-1.4.2/ueditor.all.js"> </script>
+<script type="text/javascript" charset="utf-8" src="ueditor-1.4.2/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/list.js"></script>
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+    <div>
+        输入数据库表名：<input type="text"  id="tableName" ><input type="button" value="读取" onclick="read()">
+    </div>
+    <div class="list" style="margin:10px 0">
+	    <table style="width:100%;" id="tab" >
+	        <tr>
+	            <td id="ltd"  style="background-color:#7AC5CD; border-right:1px solid #B1CDE3;" onclick="show('ltd','listDiv')">列表页面设置</td>
+	            <td id="etd" style="background-color:#E8E8E8; border-right:1px solid #B1CDE3;" onclick="show('etd','editDiv')">编辑页面设置</td>
+	            <td id="vtd"  style="background-color:#E8E8E8" onclick="show('vtd','viewDiv')" >查看页面设置</td>
+	        </tr>
+	    </table>
+    </div>
+    <div id="listDiv" class="list tabpage">
+	    <table id="fields" style="width:100%; border:0; ">
+	        <tr>
+	            <td class="headTd" style="width:15%">字段名称</td>
+	            <td class="headTd" style="width:20%">备注说明(用于列表标题)</td>
+	            <td class="headTd" style="width:10%">数据类型</td>
+	            <td class="headTd" style="width:15%">列表显示宽度(%/px)</td>
+	            <td class="headTd" style="width:10%">对齐位置</td>
+	            <td class="headTd" style="width:10%">用于列表显示<input type="checkbox"  id="listCheckAll"></td>
+	            <td class="headTd" style="width:10%">用于查询<input type="checkbox"  id="qCheckAll"></td>
+	            <td class="headTd" style="width:10%">调整显示顺序</td>
+	        </tr>
+	        <tr id="fieldTr"  style="display:">
+	            <td id="fieldName" ></td>
+	            <td><input type="text" id="comment" style="width:90%"></td>
+	            <td id="dataType"  align="center"></td>
+	            <td align="center"><input type="text" id="fieldWidth" style="width:90%"></td>
+	            <td align="center">
+	                <select id="fieldAlign" >
+	                    <option value="left">left</option>
+	                    <option value="center">center</option>
+	                    <option value="right">right</option>
+	                </select>
+	            </td>
+	            <td align="center" flag="chk"><input type="checkbox"  name="listChkId"  id="listChkId"></td>
+	            <td align="center" flag="chk"><input type="checkbox"  name="qChkId"  id="qChkId"></td>
+	            <td align="center" ><a href="javascript:void(0)" onClick="moveUp(this)">上移</a>&nbsp;&nbsp;
+	                <a href="javascript:void(0)" onClick="moveDown(this)">下移</a></td>
+	        </tr>
+	    </table>
+	    <table style="width:100%; border:0; margin-top:10px;">
+	        <tr>
+	            <td><strong>列表页面标题：</strong><input type="text" id="listName" value="xx列表页面" style="width:85%"></td>
+	            <td><strong>每页显示记录数：</strong><input type="text" id="pageSize" value="15" ></td>
+	        </tr>
+	        <tr>
+	            <td colspan="2"><strong>发送请求地址：</strong>
+	                <input type="text" id="servletName" style="width:90%" placeholder="比如Servlet的请求地址" ></td>
+	        </tr>
+	        <tr>
+	            <td colspan="2"><strong>编辑页面路径：</strong>
+	                <input type="text" id="editUrl" style="width:90%" value="edit.html"></td>
+	        </tr>
+	        <tr>
+	            <td colspan="2"><strong>查看页面路径：</strong>
+	                <input type="text" id="viewUrl" style="width:90%" value="view.html"></td>
+	        </tr>
+	    </table>
+	    <div class="boxDiv" align="center">
+	        <input type="button" value="预览" onclick="view('listPage');">
+	        <input type="button" value="下一步" onclick="show('etd','editDiv');">
+	    </div>
+    </div>
+    
+    <div  id="editDiv" class="list tabpage"  style="display:none">
+        <div id="editPageTip" style="display:none;" title="设置编辑页面行数和列数">
+            
+        </div>
+        <div id="editPageSetting">
+            
+        </div>
+        <div class="boxDiv" align="center">
+            <input type="button" value="上一步" onclick="show('ltd','listDiv');">
+            <input type="button" value="重选字段" onclick="reselectEditFields();">
+            <input type="button" value="预览" onclick="view('editPage');">
+	        <input type="button" value="下一步" onclick="show('vtd','viewDiv');">
+	    </div>
+    </div>
+    
+    <div  id="viewDiv" class="list tabpage" style="display:none">
+        <div id="viewPageTip" style="display:none" title="设置查看页面行数和列数">
+        
+        </div>
+        <div id="viewPageSetting">
+            
+        </div>
+        <div class="boxDiv" align="center">
+	        <input type="button" value="上一步" onclick="show('etd','editDiv');">
+	        <input type="button" value="重选字段" onclick="reselectViewFields();">
+	        <input type="button" value="预览" onclick="view('viewPage');">
+	        <input type="button" value="保存" onclick="checkBeforeSave();">
+	    </div>
+    </div>
+    <div style="margin-top:15px">
+        <div style="color:red">注意：<br/>
+            1、数据库表中需要有一个自增的主键字段“id”，如果没有请增加该字段！
+                在列表设置界面需将其选中并作为第一行，但它不会出现在预览界面中；在编辑界面的设置中，需将其设为隐藏字段。<br/>
+            2、在读取表字段信息后，设置过程中请不要刷新或重新加载页面，否则之前保存的设置将清除!
+        </div>
+    </div>
+    
+    <div id="viewDialog" title="页面预览效果" style="display:none"></div>
+    <div id="saveCheckInfo" title="保存前检查" style="display:none"></div>
+</body>
+</html>

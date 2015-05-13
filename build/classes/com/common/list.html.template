@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>###listName###</title>
+<link rel="stylesheet" href="../css/list.css" type="text/css">
+<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="../js/json2.js"></script>
+<script type="text/javascript" src="../js/Calendar3.js"></script>
+<script type="text/javascript" src="../js/commonfun.js"></script>
+<script type="text/javascript" src="../js/list.js"></script>
+<script type="text/javascript">
+
+    var servletName="###servletName###";
+    var editUrl="###editUrl###";
+    var viewUrl="###viewUrl###";
+    //注意：下列字段名称需与数据库表中的字段对应，第三列的宽度用于设置该列占用宽度，最后一列居中用于控制数据行的对齐方式
+    //第一列对应数据库主键ID，不能省略
+    var listFields = ###listFields###;
+    //用于搜索的字段
+    var searchFields =###searchFields###;
+    
+    //设置每个字段显示内容，每个页面单独修改
+    function getFieldStr(id,field,value){
+    	//需要做特殊处理时请在此处对每个field进行判断
+		/* if(field=="content"){
+			value = value.replace(/<[^>]*>/g,"");//过滤html标签
+		} */
+    	//点击时在新窗口打开查看页面
+		var str= "<a href='#' onclick='window.open(\""+viewUrl+"?id="+id+"\")'>"+value+"</a>";
+		return str;
+    }
+    
+    //查询字段设置，需要特殊处理的话在此处修改
+    function changeType(){
+    	if($("#searchType").val()=="updateTime"){
+    		$("#keywords").attr("onclick","new Calendar().show(this);");
+    	}else{
+    		$("#keywords").attr("onclick","");
+    	}
+    }
+    
+    $(document).ready(function(){
+    	initPage();//初始化列表页面
+    	$("#pageSize").val(###pageSize###);//设置分页大小
+    	fill("","",1);//填充数据，查询第一页
+    	$("#checkAll").click(function () {
+    		$("input[name='chkId']").each(function () {
+    			$(this).prop("checked",$("#checkAll").prop("checked"));
+    		});
+    	});
+	});
+    
+</script>
+</head>
+<body>
+    <div>
+        <select id="searchType" name="searchType" onChange="changeType()"></select>
+        <span id="key"><input type="text" id="keywords" name="keywords"></span>
+        <input type="button" value="查询" onclick="search();">
+    </div>
+    <div id="pageDiv" class="list">
+	    
+    </div>
+</body>
+</html>
