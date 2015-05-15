@@ -29,7 +29,7 @@ public class T {
 	private static void fun1() {
 		try {   
             Class.forName("com.mysql.jdbc.Driver");  
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sstcdcms","wlxu","wlxusstcd201403");   
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sstcdcms","root","root");   
             /*PreparedStatement ps = conn.prepareStatement("SELECT TABLE_SCHEMA,COLUMN_NAME, DATA_TYPE, COLUMN_COMMENT FROM information_schema.columns a WHERE TABLE_NAME='Story'");   
             ResultSet rs = ps.executeQuery();   
             while (rs.next()) {
