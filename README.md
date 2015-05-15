@@ -8,11 +8,12 @@
 #### 2.1.	搭建项目
 该项目是java web项目，名字为SimpleDataBaseCRUD，使用时可以修改为自己的名字，然后导入Eclipse中，修改系统配置后，运行即可。
 #### 2.2.	修改系统配置
-配置文件路径：/SimpleDataBaseCRUD/src/config/SystemConfig.properties，包括的项有：
-    	数据库连接配置
-    	Servlet模板路径和保存路径，需要修改为当前项目中需要保存的路径
-    	html文件模板路径和保存路径，需要修改为当前项目中需要保存的路径
-    	数据库表生成的POJO保存路径和包名
+配置文件路径：/SimpleDataBaseCRUD/src/config/SystemConfig.properties，包括的项有：  
+* 数据库连接配置  
+* Servlet模板路径和保存路径，需要修改为当前项目中需要保存的路径  
+* html文件模板路径和保存路径，需要修改为当前项目中需要保存的路径  
+* 数据库表生成的POJO保存路径和包名  
+
 #### 2.3.	使用方法
 首先在地址栏访问项目下的index.html文件，比如http://192.168.1.108:8080/SimpleDataBaseCRUD/index.html，然后输入数据库表名，读取字段信息后，按页面上的说明进行设置，在每个步骤中，可以实时预览最后三个页面的效果，直至修改正确后点击“保存”即可自动生成相应文件。创建和保存操作在/SimpleDataBaseCRUD/src/com/servlet/FieldServlet.java中，可以进行相关修改。
 
