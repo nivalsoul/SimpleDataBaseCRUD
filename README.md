@@ -15,7 +15,6 @@
 * 数据库表生成的POJO保存路径和包名  
 
 #### 2.3.	使用方法
-首先在地址栏访问项目下的index.html文件，比如：http://192.168.1.108:8080/SimpleDataBaseCRUD/index.html       
-  ，然后输入数据库表名，读取字段信息后，按页面上的说明进行设置，在每个步骤中，可以实时预览最后三个页面的效果，直至修改正确后点击“保存”即可自动生成相应文件。创建和保存操作在/SimpleDataBaseCRUD/src/com/servlet/FieldServlet.java中，可以进行相关修改。
+首先在地址栏访问项目下的index.html文件，比如：[http://192.168.1.108:8080/SimpleDataBaseCRUD/index.html]，然后输入数据库表名，读取字段信息后，按页面上的说明进行设置，在每个步骤中，可以实时预览最后三个页面的效果，直至修改正确后点击“保存”即可自动生成相应文件。创建和保存操作在/SimpleDataBaseCRUD/src/com/servlet/FieldServlet.java中，可以进行相关修改。
 
 ### 详细说明见文档：/WebContent/help/使用说明.docx
